@@ -16,10 +16,12 @@ namespace MovieCharactersAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: false)
+
+                    FullName = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Alias = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Picture = table.Column<string>(type: "nvarchar(400)", nullable: false)
+
                 },
                 constraints: table =>
                 {
@@ -32,8 +34,10 @@ namespace MovieCharactersAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+
+                    Name = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", nullable: false)
+
                 },
                 constraints: table =>
                 {
@@ -46,13 +50,15 @@ namespace MovieCharactersAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Genre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Year = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Director = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Trailer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FranchiseId = table.Column<int>(type: "int", nullable: false)
+
+                    Title = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Genre = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Year = table.Column<int>(type: "int(50)", nullable: false),
+                    Director = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Picture = table.Column<string>(type: "nvarchar(500)", nullable: true),
+                    Trailer = table.Column<string>(type: "nvarchar(500)", nullable: true),
+                    FranchiseId = table.Column<int>(type: "int", nullable: true)
+
                 },
                 constraints: table =>
                 {
