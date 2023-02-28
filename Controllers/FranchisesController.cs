@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Exceptions;
 using MovieCharactersAPI.Models;
 using MovieCharactersAPI.Models.Dtos.FranchiseDtos;
+using MovieCharactersAPI.Models.Dtos.MovieDtos;
 using MovieCharactersAPI.Services;
 
 namespace MovieCharactersAPI.Controllers
@@ -87,6 +89,30 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
         }
 
+        [HttpGet("{id}/movies")]
+        public async Task<ActionResult<IEnumerable<MovieDto>>> GetFranchiseMovies(int id)
+        {
+            try
+            {
+                return Ok(
+                    _mapper.Map<List<MovieDto>>(
+                        await _franchiseService.GetFranchiseMovies(id)
+                        )
+                    );
+            }
+            catch (FranchiseNotFoundException ex)
+            {
+                return NotFound(
+                    new ProblemDetails()
+                    {
+                        Detail = ex.Message,
+                        Status = ((int)HttpStatusCode.NotFound)
+                    });
+            }
+        }
+
+
+
         [HttpPut("{id}/movies")]
         public async Task<IActionResult> UpdateMoviesForFranchise(int[] movieIds, int id)
         {
@@ -96,6 +122,7 @@ namespace MovieCharactersAPI.Controllers
             }
             try
             {
+         
                 await _franchiseService.UpdateMovies(movieIds, id);
             }
             catch (FranchiseNotFoundException ex)
@@ -108,6 +135,8 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
 
         }
+
+
 
         // DELETE: api/Franchises/5
         [HttpDelete("{id}")]

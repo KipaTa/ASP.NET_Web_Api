@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MovieCharactersAPI.Models.Dtos
+namespace MovieCharactersAPI.Models.Dtos.MovieDtos
 {
     public class MovieDto
     {
@@ -20,6 +20,6 @@ namespace MovieCharactersAPI.Models.Dtos
 
         public Franchise Franchise { get; set; }
 
-        public List<String> Characters { get; set; }
+        public List<string> Characters { get; set; }
     }
 }
