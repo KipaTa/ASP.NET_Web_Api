@@ -1,5 +1,6 @@
 ﻿
 using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Dtos;
 
 namespace MovieCharactersAPI.Services
 {
@@ -7,8 +8,9 @@ namespace MovieCharactersAPI.Services
     {
         Task<IEnumerable<Franchise>> GetAllFranchises();
         Task<Franchise> GetFranchiseById(int id);
-        Task<Franchise> AddFranchise(Franchise franchise);
+        Task<Franchise> CreateFranchise(Franchise franchise);
         Task DeleteFranchise(int id);
         Task<Franchise> UpdateFranchise(Franchise franchise);
+        Task UpdateMovies(int[] movieIds, int id);
     }
 }
