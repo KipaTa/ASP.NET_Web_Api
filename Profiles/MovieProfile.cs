@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MovieCharactersAPI.Models.Dtos;
 using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Dtos.MovieDtos;
 
 namespace MovieCharactersAPI.Profiles
 {
