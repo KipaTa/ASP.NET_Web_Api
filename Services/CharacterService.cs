@@ -14,42 +14,29 @@ namespace MovieCharactersAPI.Services
             _context = context;
         }
 
-        public async Task<Character> AddCharacter(Character character)
+        public async Task<IEnumerable<Character>> GetAll()
+        {
+            return await _context.Characters.ToListAsync();
+        }
+        public async Task<Character> GetById(int id)
+        {
+            var character = await _context.Characters.FindAsync(id);
+
+            if (character == null)
+            {
+                throw new CharacterNotFoundException(id);
+            }
+
+            return character;
+        }
+
+        public async Task<Character> Create(Character character)
         {
             _context.Characters.Add(character);
             await _context.SaveChangesAsync();
             return character;
         }
-
-        public async Task DeleteCharacter(int id)
-        {
-            var character = await _context.Characters.FindAsync(id);
-            if (character == null)
-            {
-                throw new CharacterNotFoundException(id);
-            }
-            _context.Characters.Remove(character);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<IEnumerable<Character>> GetAllCharacters()
-        {
-            return await _context.Characters.ToListAsync();
-        }
-
-        public async Task<Character> GetCharacterById(int id)
-        {
-            var character = await _context.Characters.FindAsync(id);
-
-            if (character == null)
-            {
-                throw new CharacterNotFoundException(id);
-            }
-
-            return character;
-        }
-
-        public async Task<Character> UpdateCharacter(Character character)
+        public async Task<Character> Update(Character character)
         {
             var foundCharacter = await _context.Characters.AnyAsync(x => x.Id == character.Id);
             if (character == null)
@@ -59,6 +46,18 @@ namespace MovieCharactersAPI.Services
             _context.Entry(character).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return character;
+        }
+
+
+        public async Task DeleteById(int id)
+        {
+            var character = await _context.Characters.FindAsync(id);
+            if (character == null)
+            {
+                throw new CharacterNotFoundException(id);
+            }
+            _context.Characters.Remove(character);
+            await _context.SaveChangesAsync();
         }
     }
 }
