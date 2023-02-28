@@ -32,7 +32,7 @@ namespace MovieCharactersAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FranchiseDto>>> GetAllFranchises()
         {
-            return Ok(_mapper.Map<IEnumerable<FranchiseDto>>(await _franchiseService.GetAllFranchises()));
+            return Ok(_mapper.Map<IEnumerable<FranchiseDto>>(await _franchiseService.GetAll()));
         }
 
         // GET: api/Franchises/5
@@ -41,7 +41,7 @@ namespace MovieCharactersAPI.Controllers
         {
             try
             {
-                return Ok(_mapper.Map<FranchiseDto>(await _franchiseService.GetFranchiseById(id)));
+                return Ok(_mapper.Map<FranchiseDto>(await _franchiseService.GetById(id)));
             }
             catch(FranchiseNotFoundException ex)
             {
@@ -58,7 +58,7 @@ namespace MovieCharactersAPI.Controllers
         public async Task<ActionResult<Franchise>> CreateFranchise(CreateFranchiseDto createFranchiseDto)
         {
             var franchise = _mapper.Map<Franchise>(createFranchiseDto);
-            await _franchiseService.CreateFranchise(franchise);
+            await _franchiseService.Create(franchise);
             return CreatedAtAction(nameof(GetFranchiseById), new { id = franchise.Id }, franchise);
         }
         
@@ -76,7 +76,7 @@ namespace MovieCharactersAPI.Controllers
             try
             {
                 //await _franchiseService.UpdateFranchise(editFranchiseDto);
-                await _franchiseService.UpdateFranchise(_mapper.Map<Franchise>(editFranchiseDto));
+                await _franchiseService.Update(_mapper.Map<Franchise>(editFranchiseDto));
             }
             catch (FranchiseNotFoundException ex)
             {
@@ -144,7 +144,7 @@ namespace MovieCharactersAPI.Controllers
         {
             try
             {
-                await _franchiseService.DeleteFranchise(id);
+                await _franchiseService.DeleteById(id);
             }
             catch (FranchiseNotFoundException ex)
             {

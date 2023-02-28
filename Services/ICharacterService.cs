@@ -1,13 +1,9 @@
 ﻿using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Services;
 
 namespace CharacterCharactersAPI.Services
 {
-    public interface ICharacterService
+    public interface ICharacterService : ICrudService<Character, int>
     {
-        Task<IEnumerable<Character>> GetAllCharacters();
-        Task<Character> GetCharacterById(int id);
-        Task<Character> AddCharacter(Character character);
-        Task DeleteCharacter(int id);
-        Task<Character> UpdateCharacter(Character character);
     }
 }

@@ -26,7 +26,7 @@ namespace MovieCharactersAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
-            return Ok(await _characterService.GetAllCharacters());
+            return Ok(await _characterService.GetAll());
         }
 
         // GET: api/Characters/5
@@ -35,7 +35,7 @@ namespace MovieCharactersAPI.Controllers
         {
             try
             {
-                return await _characterService.GetCharacterById(id);
+                return await _characterService.GetById(id);
             }
             catch (CharacterNotFoundException ex)
             {
@@ -44,6 +44,15 @@ namespace MovieCharactersAPI.Controllers
                     Detail = ex.Message
                 });
             }
+        }
+
+        // POST: api/Characters
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Character>> PostCharacter(Character character)
+        {
+            return CreatedAtAction("GetCharacter", new { id = character.Id }, await _characterService.Create(character));
+
         }
 
         // PUT: api/Characters/5
@@ -58,7 +67,7 @@ namespace MovieCharactersAPI.Controllers
 
             try
             {
-                await _characterService.UpdateCharacter(character);
+                await _characterService.Update(character);
             }
             catch (CharacterNotFoundException ex)
             {
@@ -71,14 +80,7 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Characters
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(Character character)
-        {
-            return CreatedAtAction("GetCharacter", new { id = character.Id }, await _characterService.AddCharacter(character));
-
-        }
+        
 
         // DELETE: api/Characters/5
         [HttpDelete("{id}")]
@@ -86,7 +88,7 @@ namespace MovieCharactersAPI.Controllers
         {
             try
             {
-                await _characterService.DeleteCharacter(id);
+                await _characterService.DeleteById(id);
             }
             catch (CharacterNotFoundException ex)
             {

@@ -26,7 +26,7 @@ namespace MovieCharactersAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
-            return Ok(await _movieService.GetAllMovies());
+            return Ok(await _movieService.GetAll());
         }
 
         // GET: api/Movies/5
@@ -35,7 +35,7 @@ namespace MovieCharactersAPI.Controllers
         {
             try
             {
-                return await _movieService.GetMovieById(id);
+                return await _movieService.GetById(id);
             }
             catch (MovieNotFoundException ex)
             {
@@ -44,6 +44,15 @@ namespace MovieCharactersAPI.Controllers
                     Detail = ex.Message
                 });
             }
+        }
+
+        // POST: api/Movies
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
+        {
+            return CreatedAtAction("GetMovie", new { id = movie.Id }, await _movieService.Create(movie));
+
         }
 
         // PUT: api/Movies/5
@@ -58,7 +67,7 @@ namespace MovieCharactersAPI.Controllers
 
             try
             {
-                await _movieService.UpdateMovie(movie);
+                await _movieService.Update(movie);
             }
             catch (MovieNotFoundException ex)
             {
@@ -71,22 +80,13 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Movies
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
-        {
-            return CreatedAtAction("GetMovie", new { id = movie.Id }, await _movieService.AddMovie(movie));
-
-        }
-
         // DELETE: api/Movies/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
             try
             {
-                await _movieService.DeleteMovie(id);
+                await _movieService.DeleteById(id);
             }
             catch (MovieNotFoundException ex)
             {

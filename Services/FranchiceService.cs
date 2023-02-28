@@ -12,19 +12,13 @@ namespace MovieCharactersAPI.Services
         {
             _context = context;
         }
-        public async Task<Franchise> CreateFranchise(Franchise franchise)
-        {
-            await _context.Franchises.AddAsync(franchise);
-            await _context.SaveChangesAsync();
-            return franchise;
-        }
 
-        public async Task<IEnumerable<Franchise>> GetAllFranchises()
+        public async Task<IEnumerable<Franchise>> GetAll()
         {
             return await _context.Franchises.Include(x => x.Movies).ToListAsync();
         }
 
-        public async Task<Franchise> GetFranchiseById(int id)
+        public async Task<Franchise> GetById(int id)
         {
             var franchise = await _context.Franchises.Include(_ => _.Movies).FirstOrDefaultAsync(x => x.Id == id);
 
@@ -35,7 +29,14 @@ namespace MovieCharactersAPI.Services
             return franchise;
         }
 
-        public async Task<Franchise> UpdateFranchise(Franchise franchise)
+        public async Task<Franchise> Create(Franchise franchise)
+        {
+            await _context.Franchises.AddAsync(franchise);
+            await _context.SaveChangesAsync();
+            return franchise;
+        }
+
+        public async Task<Franchise> Update(Franchise franchise)
         {
             var foundFranchise = await _context.Franchises.AnyAsync(x => x.Id == franchise.Id);
             if (franchise == null)
@@ -47,8 +48,7 @@ namespace MovieCharactersAPI.Services
             return franchise;
         }
 
-
-        public async Task DeleteFranchise(int id)
+        public async Task DeleteById(int id)
         {
             var franchise = await _context.Franchises.FindAsync(id);
             if (franchise == null)
@@ -58,7 +58,6 @@ namespace MovieCharactersAPI.Services
             _context.Franchises.Remove(franchise);
             await _context.SaveChangesAsync();
         }
-
 
         public async Task UpdateMovies(int[] movieIds, int franchiceId)
         {
@@ -99,5 +98,7 @@ namespace MovieCharactersAPI.Services
                 .Where(movie => movie.FranchiseId == id)
                 .ToListAsync();
         }
+
+        
     }
 }
