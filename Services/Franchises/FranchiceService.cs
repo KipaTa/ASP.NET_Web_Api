@@ -2,7 +2,7 @@
 using MovieCharactersAPI.Exceptions;
 using MovieCharactersAPI.Models;
 
-namespace MovieCharactersAPI.Services
+namespace MovieCharactersAPI.Services.Franchises
 {
     public class FranchiceService : IFranchiseService
     {
@@ -59,6 +59,22 @@ namespace MovieCharactersAPI.Services
             await _context.SaveChangesAsync();
         }
 
+        
+
+        public async Task<ICollection<Movie>> GetFranchiseMovies(int id)
+        {
+            var foundFranchise = await _context.Franchises.AnyAsync(x => x.Id == id);
+
+            if (foundFranchise == false)
+            {
+                throw new FranchiseNotFoundException(id);
+            }
+
+            return await _context.Movies
+                .Where(movie => movie.FranchiseId == id)
+                .ToListAsync();
+        }
+
         public async Task UpdateMovies(int[] movieIds, int franchiceId)
         {
             var foundFranchise = await _context.Franchises.AnyAsync(x => x.Id == franchiceId);
@@ -79,26 +95,9 @@ namespace MovieCharactersAPI.Services
                 .FirstOrDefaultAsync();
 
             franchise.Movies = movies;
-            _context.Entry(franchise.Movies).State = EntityState.Modified;
+            _context.Entry(franchise).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
-
         }
-
-        public async Task<ICollection<Movie>> GetFranchiseMovies(int id)
-        {
-            var foundFranchise = await _context.Franchises.AnyAsync(x => x.Id == id);
-
-            if (foundFranchise == false)
-            {
-                throw new FranchiseNotFoundException(id);
-            }
-
-            return await _context.Movies
-                .Where(movie => movie.FranchiseId == id)
-                .ToListAsync();
-        }
-
-        
     }
 }

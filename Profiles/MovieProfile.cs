@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Dtos.FranchiseDtos;
 using MovieCharactersAPI.Models.Dtos.MovieDtos;
 
 namespace MovieCharactersAPI.Profiles
@@ -11,6 +12,8 @@ namespace MovieCharactersAPI.Profiles
             CreateMap<Movie, MovieDto>()
                 .ForMember(dto => dto.Characters, options =>
                 options.MapFrom(movieDomain => movieDomain.Characters.Select(character => $"{character.Id}").ToList()));
+            CreateMap<CreateMovieDto, Movie>();
+            CreateMap<EditMovieDto, Movie>();
         }
     }
 }

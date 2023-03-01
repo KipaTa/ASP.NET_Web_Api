@@ -1,9 +1,8 @@
-﻿using CharacterCharactersAPI.Services;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Exceptions;
 using MovieCharactersAPI.Models;
 
-namespace MovieCharactersAPI.Services
+namespace MovieCharactersAPI.Services.Characters
 {
     public class CharacterService : ICharacterService
     {

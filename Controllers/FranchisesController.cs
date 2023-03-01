@@ -11,7 +11,7 @@ using MovieCharactersAPI.Exceptions;
 using MovieCharactersAPI.Models;
 using MovieCharactersAPI.Models.Dtos.FranchiseDtos;
 using MovieCharactersAPI.Models.Dtos.MovieDtos;
-using MovieCharactersAPI.Services;
+using MovieCharactersAPI.Services.Franchises;
 
 namespace MovieCharactersAPI.Controllers
 {
@@ -75,7 +75,6 @@ namespace MovieCharactersAPI.Controllers
 
             try
             {
-                //await _franchiseService.UpdateFranchise(editFranchiseDto);
                 await _franchiseService.Update(_mapper.Map<Franchise>(editFranchiseDto));
             }
             catch (FranchiseNotFoundException ex)
