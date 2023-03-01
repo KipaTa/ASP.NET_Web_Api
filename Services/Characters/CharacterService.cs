@@ -17,9 +17,10 @@ namespace MovieCharactersAPI.Services.Characters
         {
             return await _context.Characters.ToListAsync();
         }
+
         public async Task<Character> GetById(int id)
         {
-            var character = await _context.Characters.FindAsync(id);
+            var character = await _context.Characters.Include(x => x.Movies).FirstOrDefaultAsync(x => x.Id == id);
 
             if (character == null)
             {
@@ -31,7 +32,7 @@ namespace MovieCharactersAPI.Services.Characters
 
         public async Task<Character> Create(Character character)
         {
-            _context.Characters.Add(character);
+            await _context.Characters.AddAsync(character);
             await _context.SaveChangesAsync();
             return character;
         }
