@@ -1,7 +1,8 @@
-using CharacterCharactersAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Models;
-using MovieCharactersAPI.Services;
+using MovieCharactersAPI.Services.Characters;
+using MovieCharactersAPI.Services.Franchises;
+using MovieCharactersAPI.Services.Movies;
 
 var builder = WebApplication.CreateBuilder(args);
 

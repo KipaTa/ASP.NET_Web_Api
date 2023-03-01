@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MovieCharactersAPI.Models.Dtos.MovieDtos
+﻿namespace MovieCharactersAPI.Models.Dtos.MovieDtos
 {
-    public class MovieDto
+    public class CreateMovieDto
     {
-        public int Id { get; set; }
-
         public string Title { get; set; }
         public string Genre { get; set; }
         public int? Year { get; set; }
@@ -17,7 +13,5 @@ namespace MovieCharactersAPI.Models.Dtos.MovieDtos
         public string? Trailer { get; set; }
 
         public int FranchiseId { get; set; }
-
-        public List<int> Characters { get; set; }
     }
 }

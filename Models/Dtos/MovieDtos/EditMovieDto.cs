@@ -14,6 +14,8 @@
 
         public string? Trailer { get; set; }
 
+        public int FranchiseId { get; set; }
+
 
     }
 }
