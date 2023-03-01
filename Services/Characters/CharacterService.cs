@@ -20,7 +20,7 @@ namespace MovieCharactersAPI.Services.Characters
 
         public async Task<Character> GetById(int id)
         {
-            var character = await _context.Characters.Include(x => x.Movies).FirstOrDefaultAsync(x => x.Id == id);
+            var character = await _context.Characters.Include(_ => _.Movies).FirstOrDefaultAsync(x => x.Id == id);
 
             if (character == null)
             {
