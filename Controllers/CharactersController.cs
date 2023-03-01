@@ -64,16 +64,16 @@ namespace MovieCharactersAPI.Controllers
         // PUT: api/Characters/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, CharacterDto characterDto)
+        public async Task<IActionResult> PutCharacter(int id, EditCharacterDto editCharacterDto)
         {
-            if (id != characterDto.Id)
+            if (id != editCharacterDto.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await _characterService.Update(_mapper.Map<Character>(characterDto));
+                await _characterService.Update(_mapper.Map<Character>(editCharacterDto));
             }
             catch (CharacterNotFoundException ex)
             {
