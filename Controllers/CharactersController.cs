@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Exceptions;
 using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Dtos.CharacterDtos;
+using MovieCharactersAPI.Models.Dtos.FranchiseDtos;
 using MovieCharactersAPI.Services.Characters;
 
 namespace MovieCharactersAPI.Controllers
@@ -16,26 +19,28 @@ namespace MovieCharactersAPI.Controllers
     public class CharactersController : ControllerBase
     {
         private readonly ICharacterService _characterService;
+        private readonly IMapper _mapper;
 
-        public CharactersController(ICharacterService characterService)
+        public CharactersController(ICharacterService characterService, IMapper mapper)
         {
             _characterService = characterService;
+            _mapper = mapper;
         }
 
         // GET: api/Characters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
+        public async Task<ActionResult<IEnumerable<CharacterDto>>> GetAllCharacters()
         {
-            return Ok(await _characterService.GetAll());
+            return Ok(_mapper.Map<IEnumerable<CharacterDto>>(await _characterService.GetAll()));
         }
 
         // GET: api/Characters/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterDto>> GetCharacterById(int id)
         {
             try
             {
-                return await _characterService.GetById(id);
+                return Ok(_mapper.Map<CharacterDto>(await _characterService.GetById(id)));
             }
             catch (CharacterNotFoundException ex)
             {
@@ -49,25 +54,26 @@ namespace MovieCharactersAPI.Controllers
         // POST: api/Characters
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(Character character)
+        public async Task<ActionResult<Character>> CreateCharacter(CreateCharacterDto createCharacterDto)
         {
-            return CreatedAtAction("GetCharacter", new { id = character.Id }, await _characterService.Create(character));
-
+            var character = _mapper.Map<Character>(createCharacterDto);
+            await _characterService.Create(character);
+            return CreatedAtAction(nameof(GetCharacterById), new { id = character.Id }, character);
         }
 
         // PUT: api/Characters/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, Character character)
+        public async Task<IActionResult> PutCharacter(int id, CharacterDto characterDto)
         {
-            if (id != character.Id)
+            if (id != characterDto.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await _characterService.Update(character);
+                await _characterService.Update(_mapper.Map<Character>(characterDto));
             }
             catch (CharacterNotFoundException ex)
             {
