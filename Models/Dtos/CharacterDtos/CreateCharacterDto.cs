@@ -8,7 +8,5 @@
 
         public string? Gender { get; set; }
         public string? Picture { get; set; }
-
-        public List<int> Movies { get; set; }
     }
 }

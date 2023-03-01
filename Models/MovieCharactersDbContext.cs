@@ -48,10 +48,12 @@ namespace MovieCharactersAPI.Models
                     je =>
                     {
                         je.HasKey("MovieId", "CharacterId");
-                        je.HasData(
+                        je.HasData( //a1, H2, F3, | Fellow1, retturn2, harry3
                             new { MovieId = 1, CharacterId = 1 },
                             new { MovieId = 1, CharacterId = 3 },
-                            new { MovieId = 2, CharacterId = 2 }
+                            new { MovieId = 3, CharacterId = 2 },
+                            new { MovieId = 2, CharacterId = 1 },
+                            new { MovieId = 2, CharacterId = 3 }
                         );
                     });
         }

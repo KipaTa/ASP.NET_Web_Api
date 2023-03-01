@@ -49,8 +49,18 @@ namespace MovieCharactersAPI.Migrations
                         },
                         new
                         {
-                            MovieId = 2,
+                            MovieId = 3,
                             CharacterId = 2
+                        },
+                        new
+                        {
+                            MovieId = 2,
+                            CharacterId = 1
+                        },
+                        new
+                        {
+                            MovieId = 2,
+                            CharacterId = 3
                         });
                 });
 

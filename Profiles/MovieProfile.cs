@@ -11,7 +11,9 @@ namespace MovieCharactersAPI.Profiles
         {
             CreateMap<Movie, MovieDto>()
                 .ForMember(dto => dto.Characters, options =>
-                options.MapFrom(movieDomain => movieDomain.Characters.Select(character => $"{character.Id}").ToList()));
+                options.MapFrom(movieDomain => movieDomain.Characters.Select(character => $"{character.FullName}").ToList()))
+                .ForMember(dto => dto.Franchise, options => 
+                options.MapFrom(movieDomain => movieDomain.Franchise.Name));
             CreateMap<CreateMovieDto, Movie>();
             CreateMap<EditMovieDto, Movie>();
         }
