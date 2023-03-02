@@ -75,6 +75,24 @@ namespace MovieCharactersAPI.Services.Franchises
                 .ToListAsync();
         }
 
+        public async Task<ICollection<Movie>> GetFranchiseCharacters(int id)
+        {
+            var foundFranchise = await _context.Franchises.AnyAsync(x => x.Id == id);
+
+            if (foundFranchise == false)
+            {
+                throw new FranchiseNotFoundException(id);
+            }
+
+           
+            return await _context.Movies
+                .Include(movie => movie.Characters)
+                .Where(movie => movie.FranchiseId == id)
+                .ToListAsync();
+        }
+    
+
+
         public async Task UpdateMovies(int[] movieIds, int franchiceId)
         {
             var foundFranchise = await _context.Franchises.AnyAsync(x => x.Id == franchiceId);
@@ -99,5 +117,6 @@ namespace MovieCharactersAPI.Services.Franchises
 
             await _context.SaveChangesAsync();
         }
+
     }
 }
