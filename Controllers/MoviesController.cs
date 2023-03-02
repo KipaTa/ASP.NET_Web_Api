@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Exceptions;
 using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Dtos.CharacterDtos;
 using MovieCharactersAPI.Models.Dtos.MovieDtos;
 using MovieCharactersAPI.Services.Movies;
 
@@ -84,6 +86,28 @@ namespace MovieCharactersAPI.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("{id}/chracters")]
+        public async Task<ActionResult<IEnumerable<CharacterDto>>> GetMovieCharacters(int id)
+        {
+            try
+            {
+                return Ok(
+                    _mapper.Map<List<CharacterDto>>(
+                        await _movieService.GetMovieCharacters(id)
+                        )
+                    );
+            }
+            catch (MovieNotFoundException ex)
+            {
+                return NotFound(
+                    new ProblemDetails()
+                    {
+                        Detail = ex.Message,
+                        Status = ((int)HttpStatusCode.NotFound)
+                    });
+            }
         }
 
         // DELETE: api/Movies/5

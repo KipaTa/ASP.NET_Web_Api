@@ -60,9 +60,9 @@ namespace MovieCharactersAPI.Services.Movies
             await _context.SaveChangesAsync();
         }
 
-        public Task<ICollection<Character>> GetMoviesCharacters(int id)
+        public async Task<ICollection<Character>> GetMovieCharacters(int id)
         {
-            /*
+
             var foundMovies = await _context.Movies.AnyAsync(x => x.Id == id);
 
             if (foundMovies == false)
@@ -71,10 +71,9 @@ namespace MovieCharactersAPI.Services.Movies
             }
 
             return await _context.Characters
-                .Where(character => character.m == id)
+                .Where(character => character.Movies.Any(movie => movie.Id == id))
+                .Include(x => x.Movies)
                 .ToListAsync();
-            */
-            throw new FranchiseNotFoundException(id);
         }
     }
 }
