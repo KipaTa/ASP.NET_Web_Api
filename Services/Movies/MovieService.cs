@@ -15,12 +15,12 @@ namespace MovieCharactersAPI.Services.Movies
 
         public async Task<IEnumerable<Movie>> GetAll()
         {
-            return await _context.Movies.Include(x => x.Characters).ToListAsync();
+            return await _context.Movies.Include(x => x.Characters).Include(m => m.Franchise).ToListAsync();
         }
 
         public async Task<Movie> GetById(int id)
         {
-            var movie = await _context.Movies.Include(x => x.Characters).FirstOrDefaultAsync(x => x.Id == id);
+            var movie = await _context.Movies.Include(x => x.Characters).Include(m => m.Franchise).FirstOrDefaultAsync(x => x.Id == id);
 
             if (movie == null)
             {

@@ -7,7 +7,7 @@
 namespace MovieCharactersAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDb : Migration
+    public partial class MovieCharacterMigrationDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -127,7 +127,9 @@ namespace MovieCharactersAPI.Migrations
                 {
                     { 1, 1 },
                     { 3, 1 },
-                    { 2, 2 }
+                    { 1, 2 },
+                    { 3, 2 },
+                    { 2, 3 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -16,8 +16,8 @@ namespace MovieCharactersAPI.Models.Dtos.MovieDtos
 
         public string? Trailer { get; set; }
 
-        public int FranchiseId { get; set; }
+        public string Franchise { get; set; }
 
-        public List<int> Characters { get; set; }
+        public List<string> Characters { get; set; }
     }
 }
