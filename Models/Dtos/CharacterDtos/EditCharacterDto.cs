@@ -1,7 +1,8 @@
 ﻿namespace MovieCharactersAPI.Models.Dtos.CharacterDtos
 {
-    public class CreateCharacterDto
+    public class EditCharacterDto
     {
+        public int Id { get; set; }
         public string FullName { get; set; }
         public string? Alias { get; set; }
 
