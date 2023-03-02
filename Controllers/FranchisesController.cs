@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Exceptions;
 using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Dtos.CharacterDtos;
 using MovieCharactersAPI.Models.Dtos.FranchiseDtos;
 using MovieCharactersAPI.Models.Dtos.MovieDtos;
 using MovieCharactersAPI.Services.Franchises;
@@ -108,6 +109,37 @@ namespace MovieCharactersAPI.Controllers
                         Status = ((int)HttpStatusCode.NotFound)
                     });
             }
+        }
+
+
+        [HttpGet("{id}/characters")]
+        public async Task<ActionResult<IEnumerable<CharacterDto>>> GetFranchiseCharacters(int id)
+        {
+            try
+            {
+               var franchises = await _franchiseService.GetFranchiseCharacters(id);
+
+                List<CharacterDto> movies = new List<CharacterDto>();
+
+                foreach (var franchise in franchises)
+                {
+                    movies = _mapper.Map<List<CharacterDto>>(franchise.Characters);  
+                }
+
+                return Ok(movies);
+
+            }
+            catch (FranchiseNotFoundException ex)
+            {
+                return NotFound(
+                    new ProblemDetails()
+                    {
+                        Detail = ex.Message,
+                        Status = ((int)HttpStatusCode.NotFound)
+                    });
+            }
+
+
         }
 
 
