@@ -75,5 +75,30 @@ namespace MovieCharactersAPI.Services.Movies
                 .Include(x => x.Movies)
                 .ToListAsync();
         }
+
+        public  async Task UpdateCharacters(int[] characterIds, int movieId)
+        {
+            var foundMovie = await _context.Movies.AnyAsync(x => x.Id == movieId);
+
+            if (foundMovie == false)
+            {
+                throw new MovieNotFoundException(movieId);
+            }
+            
+            List<Character> characters = characterIds
+                .ToList()
+                .Select(characterIds => _context.Characters
+                .Where(character => character.Id == characterIds).First())
+                .ToList();
+
+            Movie movie = await _context.Movies
+                .Where(movie => movie.Id == movieId)
+                .FirstOrDefaultAsync();
+
+            movie.Characters = characters;
+            _context.Entry(movie).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
