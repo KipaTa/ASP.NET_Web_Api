@@ -110,6 +110,29 @@ namespace MovieCharactersAPI.Controllers
             }
         }
 
+        [HttpPut("{id}/characters")]
+        public async Task<IActionResult> UpdateCharactersForMovie(int[] characterIds, int id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+
+                await _movieService.UpdateCharacters(characterIds, id);
+            }
+            catch (MovieNotFoundException ex)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Detail = ex.Message
+                });
+            }
+            return NoContent();
+
+        }
+
         // DELETE: api/Movies/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
