@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,9 @@ using MovieCharactersAPI.Services.Movies;
 namespace MovieCharactersAPI.Controllers
 {
     [Route("api/[controller]")]
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
     [ApiController]
     public class CharactersController : ControllerBase
     {
@@ -31,14 +35,22 @@ namespace MovieCharactersAPI.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Characters
+       
+        /// <summary>
+        /// Gets all characters
+        /// </summary>
+        /// <returns>List of Characters</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CharacterDto>>> GetAllCharacters()
         {
             return Ok(_mapper.Map<IEnumerable<CharacterDto>>(await _characterService.GetAll()));
         }
 
-        // GET: api/Characters/5
+        /// <summary>
+        /// Gets a character based on a unique identifier
+        /// </summary>
+        /// <param name="id">A unique id for a character</param>
+        /// <returns>A character resoursce</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterDto>> GetCharacterById(int id)
         {
@@ -56,8 +68,11 @@ namespace MovieCharactersAPI.Controllers
             }
         }
 
-        // POST: api/Characters
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new character
+        /// </summary>
+        /// <param name="newCharacterDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<CharacterDto>> CreateCharacter(NewCharacterDto newCharacterDto)
         {
@@ -83,8 +98,12 @@ namespace MovieCharactersAPI.Controllers
             return CreatedAtAction(nameof(GetCharacterById), new { id = characterDto.Id }, characterDto);
         }
 
-        // PUT: api/Characters/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a character based a unique identifier
+        /// </summary>
+        /// <param name="id">A unique id for a character</param>
+        /// <param name="editCharacterDto"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCharacter(int id, EditCharacterDto editCharacterDto)
         {
@@ -108,9 +127,13 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
         }
 
-        
 
-        // DELETE: api/Characters/5
+
+        /// <summary>
+        /// Deletes a unique character
+        /// </summary>
+        /// <param name="id">A unique id for a character</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id)
         {

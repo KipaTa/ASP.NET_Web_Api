@@ -33,9 +33,9 @@ namespace MovieCharactersAPI.Models
             );
 
             modelBuilder.Entity<Character>().HasData(
-                new Character { Id = 1, FullName = "Aragorn", Alias = "Strider", Gender = "Male", Picture = "" },
-                new Character { Id = 2, FullName= "Harry Potter", Alias = "The Chosen one", Gender= "Male", Picture = "" },
-                new Character { Id = 3, FullName= "Frodo Baggins", Alias= "Mr.Underhill", Gender= "Male", Picture= "" }
+                new Character { Id = 1, FullName = "Aragorn", Alias = "Strider", Gender = "Male", Picture = "https://static.wikia.nocookie.net/lotr/images/b/b6/Aragorn_profile.jpg/revision/latest?cb=20170121121423" },
+                new Character { Id = 2, FullName= "Harry Potter", Alias = "The Chosen one", Gender= "Male", Picture = "https://upload.wikimedia.org/wikipedia/en/d/d7/Harry_Potter_character_poster.jpg" },
+                new Character { Id = 3, FullName= "Frodo Baggins", Alias= "Mr.Underhill", Gender= "Male", Picture= "https://static.wikia.nocookie.net/lotr/images/3/32/Frodo_%28FotR%29.png/revision/latest/scale-to-width-down/700?cb=20221006065757" }
                 );
 
             modelBuilder.Entity<Movie>()
