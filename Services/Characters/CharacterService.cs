@@ -1,6 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Exceptions;
 using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Dtos.CharacterDtos;
+using MovieCharactersAPI.Models.Dtos.MovieDtos;
+using MovieCharactersAPI.Services.Movies;
+using NuGet.Packaging;
+using System.ComponentModel;
 
 namespace MovieCharactersAPI.Services.Characters
 {
@@ -48,7 +53,6 @@ namespace MovieCharactersAPI.Services.Characters
             return character;
         }
 
-
         public async Task DeleteById(int id)
         {
             var character = await _context.Characters.FindAsync(id);
@@ -58,6 +62,22 @@ namespace MovieCharactersAPI.Services.Characters
             }
             _context.Characters.Remove(character);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<string>> UpdateJoinTable(Character character, List<int> movieIds)
+        {
+            List<string> movies = new List<string>();
+            
+            foreach (int movieId in movieIds)
+            {
+                Movie movie = await _context.Movies.FirstOrDefaultAsync(m => m.Id == movieId);
+                _context.Attach(movie);
+                character.Movies.Add(movie);
+                movies.Add(movie.Title);
+            }
+
+            await _context.SaveChangesAsync();
+            return movies;
         }
     }
 }
