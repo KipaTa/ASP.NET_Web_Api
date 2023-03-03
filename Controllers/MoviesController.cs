@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -30,18 +31,18 @@ namespace MovieCharactersAPI.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Dtos.MovieDtos.MovieDto>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
         {
-            return base.Ok(_mapper.Map<IEnumerable<Models.Dtos.MovieDtos.MovieDto>>(await _movieService.GetAll()));
+            return base.Ok(_mapper.Map<IEnumerable<MovieDto>>(await _movieService.GetAll()));
         }
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Models.Dtos.MovieDtos.MovieDto>> GetMovie(int id)
+        public async Task<ActionResult<MovieDto>> GetMovie(int id)
         {
             try
             {
-                return base.Ok(_mapper.Map <Models.Dtos.MovieDtos.MovieDto >(await _movieService.GetById(id)));
+                return base.Ok(_mapper.Map <MovieDto >(await _movieService.GetById(id)));
             }
             catch (MovieNotFoundException ex)
             {
@@ -55,12 +56,14 @@ namespace MovieCharactersAPI.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Models.Movie>> PostMovie(CreateMovieDto createMovieDto)
+        public async Task<ActionResult<Movie>> PostMovie(CreateMovieDto createMovieDto)
         {
-            var movie = _mapper.Map<Models.Movie>(createMovieDto);
+            var movie = _mapper.Map<Movie>(createMovieDto);
             await _movieService.Create(movie);
-            return CreatedAtAction(nameof(GetMovies), new { id = movie.Id }, movie);
 
+            var newMovie = _mapper.Map<MovieDto>(movie);
+            newMovie.Franchise = movie?.Franchise?.Name;
+            return CreatedAtAction(nameof(GetMovies), new { id = movie.Id }, newMovie);
         }
 
         // PUT: api/Movies/5
@@ -75,7 +78,7 @@ namespace MovieCharactersAPI.Controllers
 
             try
             {
-                await _movieService.Update(_mapper.Map<Models.Movie>(editMovieDto));
+                await _movieService.Update(_mapper.Map<Movie>(editMovieDto));
             }
             catch (MovieNotFoundException ex)
             {
@@ -93,11 +96,7 @@ namespace MovieCharactersAPI.Controllers
         {
             try
             {
-                return Ok(
-                    _mapper.Map<List<CharacterDto>>(
-                        await _movieService.GetMovieCharacters(id)
-                        )
-                    );
+                return Ok(_mapper.Map<List<CharacterDto>>(await _movieService.GetMovieCharacters(id)));
             }
             catch (MovieNotFoundException ex)
             {

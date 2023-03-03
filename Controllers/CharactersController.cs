@@ -25,11 +25,10 @@ namespace MovieCharactersAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IMovieService _movieService;
 
-        public CharactersController(ICharacterService characterService, IMovieService movieService, IMapper mapper)
+        public CharactersController(ICharacterService characterService, IMapper mapper)
         {
             _characterService = characterService;
             _mapper = mapper;
-            _movieService = movieService;
         }
 
         // GET: api/Characters

@@ -119,27 +119,24 @@ namespace MovieCharactersAPI.Controllers
             {
                var franchises = await _franchiseService.GetFranchiseCharacters(id);
 
-                List<CharacterDto> movies = new List<CharacterDto>();
+                List<CharacterDto> characters = new List<CharacterDto>();
 
                 foreach (var franchise in franchises)
                 {
-                    movies = _mapper.Map<List<CharacterDto>>(franchise.Characters);  
+                    characters = _mapper.Map<List<CharacterDto>>(franchise.Characters);  
                 }
 
-                return Ok(movies);
-
+                return Ok(characters);
             }
+
             catch (FranchiseNotFoundException ex)
             {
-                return NotFound(
-                    new ProblemDetails()
-                    {
-                        Detail = ex.Message,
-                        Status = ((int)HttpStatusCode.NotFound)
-                    });
+                return NotFound(new ProblemDetails()
+                {
+                    Detail = ex.Message,
+                    Status = ((int)HttpStatusCode.NotFound)
+                });
             }
-
-
         }
 
 
@@ -166,8 +163,6 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
 
         }
-
-
 
         // DELETE: api/Franchises/5
         [HttpDelete("{id}")]

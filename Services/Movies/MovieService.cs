@@ -34,6 +34,8 @@ namespace MovieCharactersAPI.Services.Movies
         {
             await _context.Movies.AddAsync(movie);
             await _context.SaveChangesAsync();
+            Franchise franchisa = await _context.Franchises.FirstOrDefaultAsync(f => f.Id == movie.FranchiseId);
+            movie.Franchise = franchisa;
             return movie;
         }
 
