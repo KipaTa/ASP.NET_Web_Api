@@ -13,13 +13,14 @@ they appear in, and the franchises these movies belong to.
 * Microsoft SQL Server Management Studio
 * Swagger
 
-## sql_crud_operations_with_csharp Folder Structure
+## ASP.NET_Web_Api Folder Structure
 ```
 
         
 ```
 
 ## MovieCharactersAPI Diagram
+![MovieCharactersDb diagram](/MovieCharactersDbDiagram.PNG)
 
 
 
