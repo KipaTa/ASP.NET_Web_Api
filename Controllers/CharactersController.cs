@@ -50,7 +50,7 @@ namespace MovieCharactersAPI.Controllers
         /// Gets a character based on a unique identifier
         /// </summary>
         /// <param name="id">A unique id for a character</param>
-        /// <returns>A character resoursce</returns>
+        /// <returns>A character resource</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterDto>> GetCharacterById(int id)
         {
@@ -72,7 +72,6 @@ namespace MovieCharactersAPI.Controllers
         /// Creates a new character
         /// </summary>
         /// <param name="newCharacterDto"></param>
-        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<CharacterDto>> CreateCharacter(NewCharacterDto newCharacterDto)
         {
@@ -103,7 +102,6 @@ namespace MovieCharactersAPI.Controllers
         /// </summary>
         /// <param name="id">A unique id for a character</param>
         /// <param name="editCharacterDto"></param>
-        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCharacter(int id, EditCharacterDto editCharacterDto)
         {
@@ -133,7 +131,6 @@ namespace MovieCharactersAPI.Controllers
         /// Deletes a unique character
         /// </summary>
         /// <param name="id">A unique id for a character</param>
-        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id)
         {

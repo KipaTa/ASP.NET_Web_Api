@@ -162,7 +162,7 @@ namespace MovieCharactersAPI.Controllers
         }
 
         /// <summary>
-        /// Deletes a unique franchise
+        /// Deletes a unique movie
         /// </summary>
         /// <param name="id">A unique id for a movie</param>
         /// <returns></returns>

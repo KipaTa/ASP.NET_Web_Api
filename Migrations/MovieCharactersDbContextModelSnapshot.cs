@@ -100,7 +100,7 @@ namespace MovieCharactersAPI.Migrations
                             Alias = "Strider",
                             FullName = "Aragorn",
                             Gender = "Male",
-                            Picture = ""
+                            Picture = "https://static.wikia.nocookie.net/lotr/images/b/b6/Aragorn_profile.jpg/revision/latest?cb=20170121121423"
                         },
                         new
                         {
@@ -108,7 +108,7 @@ namespace MovieCharactersAPI.Migrations
                             Alias = "The Chosen one",
                             FullName = "Harry Potter",
                             Gender = "Male",
-                            Picture = ""
+                            Picture = "https://upload.wikimedia.org/wikipedia/en/d/d7/Harry_Potter_character_poster.jpg"
                         },
                         new
                         {
@@ -116,7 +116,7 @@ namespace MovieCharactersAPI.Migrations
                             Alias = "Mr.Underhill",
                             FullName = "Frodo Baggins",
                             Gender = "Male",
-                            Picture = ""
+                            Picture = "https://static.wikia.nocookie.net/lotr/images/3/32/Frodo_%28FotR%29.png/revision/latest/scale-to-width-down/700?cb=20221006065757"
                         });
                 });
 

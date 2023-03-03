@@ -7,7 +7,7 @@
 namespace MovieCharactersAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class MovieCharacterMigrationDB : Migration
+    public partial class MovieCharacterInitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -96,9 +96,9 @@ namespace MovieCharactersAPI.Migrations
                 columns: new[] { "Id", "Alias", "FullName", "Gender", "Picture" },
                 values: new object[,]
                 {
-                    { 1, "Strider", "Aragorn", "Male", "" },
-                    { 2, "The Chosen one", "Harry Potter", "Male", "" },
-                    { 3, "Mr.Underhill", "Frodo Baggins", "Male", "" }
+                    { 1, "Strider", "Aragorn", "Male", "https://static.wikia.nocookie.net/lotr/images/b/b6/Aragorn_profile.jpg/revision/latest?cb=20170121121423" },
+                    { 2, "The Chosen one", "Harry Potter", "Male", "https://upload.wikimedia.org/wikipedia/en/d/d7/Harry_Potter_character_poster.jpg" },
+                    { 3, "Mr.Underhill", "Frodo Baggins", "Male", "https://static.wikia.nocookie.net/lotr/images/3/32/Frodo_%28FotR%29.png/revision/latest/scale-to-width-down/700?cb=20221006065757" }
                 });
 
             migrationBuilder.InsertData(
