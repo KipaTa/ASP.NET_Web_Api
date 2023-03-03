@@ -28,18 +28,18 @@ namespace MovieCharactersAPI.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<Models.Dtos.MovieDtos.MovieDto>>> GetMovies()
         {
-            return Ok(_mapper.Map<IEnumerable<MovieDto>>(await _movieService.GetAll()));
+            return base.Ok(_mapper.Map<IEnumerable<Models.Dtos.MovieDtos.MovieDto>>(await _movieService.GetAll()));
         }
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MovieDto>> GetMovie(int id)
+        public async Task<ActionResult<Models.Dtos.MovieDtos.MovieDto>> GetMovie(int id)
         {
             try
             {
-                return Ok(_mapper.Map < MovieDto >(await _movieService.GetById(id)));
+                return base.Ok(_mapper.Map <Models.Dtos.MovieDtos.MovieDto >(await _movieService.GetById(id)));
             }
             catch (MovieNotFoundException ex)
             {
@@ -53,9 +53,9 @@ namespace MovieCharactersAPI.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie(CreateMovieDto createMovieDto)
+        public async Task<ActionResult<Models.Movie>> PostMovie(CreateMovieDto createMovieDto)
         {
-            var movie = _mapper.Map<Movie>(createMovieDto);
+            var movie = _mapper.Map<Models.Movie>(createMovieDto);
             await _movieService.Create(movie);
             return CreatedAtAction(nameof(GetMovies), new { id = movie.Id }, movie);
 
@@ -73,7 +73,7 @@ namespace MovieCharactersAPI.Controllers
 
             try
             {
-                await _movieService.Update(_mapper.Map<Movie>(editMovieDto));
+                await _movieService.Update(_mapper.Map<Models.Movie>(editMovieDto));
             }
             catch (MovieNotFoundException ex)
             {
