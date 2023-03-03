@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,9 @@ using MovieCharactersAPI.Services.Movies;
 namespace MovieCharactersAPI.Controllers
 {
     [Route("api/[controller]")]
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
     [ApiController]
     public class MoviesController : ControllerBase
     {
@@ -28,14 +32,21 @@ namespace MovieCharactersAPI.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Movies
+        /// <summary>
+        /// Gets all movies
+        /// </summary>
+        /// <returns>List of Movies</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Models.Dtos.MovieDtos.MovieDto>>> GetMovies()
         {
             return base.Ok(_mapper.Map<IEnumerable<Models.Dtos.MovieDtos.MovieDto>>(await _movieService.GetAll()));
         }
 
-        // GET: api/Movies/5
+        /// <summary>
+        /// Gets a movie based on a unique identifier
+        /// </summary>
+        /// <param name="id">A unique id for a movie</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Models.Dtos.MovieDtos.MovieDto>> GetMovie(int id)
         {
@@ -52,8 +63,11 @@ namespace MovieCharactersAPI.Controllers
             }
         }
 
-        // POST: api/Movies
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new movie
+        /// </summary>
+        /// <param name="createMovieDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Models.Movie>> PostMovie(CreateMovieDto createMovieDto)
         {
@@ -63,8 +77,12 @@ namespace MovieCharactersAPI.Controllers
 
         }
 
-        // PUT: api/Movies/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a movie based on a unique identifier
+        /// </summary>
+        /// <param name="id">A unique id for a movie</param>
+        /// <param name="editMovieDto"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie(int id, EditMovieDto editMovieDto)
         {
@@ -88,6 +106,11 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Gets all characters in a unique movie
+        /// </summary>
+        /// <param name="id">A unique id for a franchise</param>
+        /// <returns></returns>
         [HttpGet("{id}/chracters")]
         public async Task<ActionResult<IEnumerable<CharacterDto>>> GetMovieCharacters(int id)
         {
@@ -110,6 +133,12 @@ namespace MovieCharactersAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates characters to a unique movie
+        /// </summary>
+        /// <param name="characterIds">A unique id for a character</param>
+        /// <param name="id">A unique id for a movie</param>
+        /// <returns></returns>
         [HttpPut("{id}/characters")]
         public async Task<IActionResult> UpdateCharactersForMovie(int[] characterIds, int id)
         {
@@ -133,7 +162,11 @@ namespace MovieCharactersAPI.Controllers
 
         }
 
-        // DELETE: api/Movies/5
+        /// <summary>
+        /// Deletes a unique franchise
+        /// </summary>
+        /// <param name="id">A unique id for a movie</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
